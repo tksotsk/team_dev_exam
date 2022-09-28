@@ -31,13 +31,18 @@ class AssignsController < ApplicationController
       I18n.t('views.messages.cannot_delete_the_leader')
     elsif Assign.where(user_id: assigned_user.id).count == 1
       I18n.t('views.messages.cannot_delete_only_a_member')
-    
-    elsif assign.destroy 
+    elsif current_user == assign.team.owner || current_user == assigned_user
+      if assign.destroy 
         set_next_team(assign, assigned_user)
         I18n.t('views.messages.delete_member')
+      end
+    elsif current_user != assigned_user
+
+      I18n.t('views.messages.cannot_delete_another_member')
     else
       I18n.t('views.messages.cannot_delete_member_4_some_reason')
     end
+
   end
 
   def email_exist?
