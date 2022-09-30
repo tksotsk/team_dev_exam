@@ -38,6 +38,11 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: block;">
+              <li class="nav-item">
+                <%= link_to agenda_path(agenda.id), method: :delete, class: 'nav-link' do %>
+                  <p>+ <%= I18n.t('views.messages.delete_agenda') %></p>
+                <% end %>
+              </li>
               <% agenda.articles.each do |article| %>
                 <li class="nav-item">
                   <%= link_to article_path(article), class: 'nav-link' do %>
