@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'statics#top'
   get :dashboard, to: 'teams#dashboard'
-
+  
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   resource :user
   
   resources :teams do
+    member do
+      get :transfer_of_authority, to: 'teams#transfer_of_authority'
+    end
     resources :assigns, only: %w(create destroy)
     resources :agendas, shallow: true do
       resources :articles do
